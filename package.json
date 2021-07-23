@@ -5,7 +5,7 @@
   "description": "Export tool for Figma",
   "repository": {
     "type": "git",
-    "url": "https://github.com/marcomontalbano/figma-export"
+    "url": "https://github.com/jorgemartins/figma-export"
   },
   "scripts": {
     "prepare": "husky install",
