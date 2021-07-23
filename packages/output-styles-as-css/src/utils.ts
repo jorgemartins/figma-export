@@ -2,6 +2,7 @@ export const sanitizeText = (text: string): string => {
     return text
         .replace(/^[^\S\r\n]+/gm, '')
         .replace(/^\*/gm, ' *')
+        .replace(/(\s\/\s)+/gm, '-')
         .replace(/^"/gm, '  "');
 };
 
@@ -14,5 +15,5 @@ export const writeComment = (message: string): string => {
 };
 
 export const writeVariable = (name: string, value: string): string => {
-    return value && sanitizeText(`--${name}: ${value};\n`);
+    return value && sanitizeText(`--${name.toLowerCase()}: ${value};\n`);
 };
