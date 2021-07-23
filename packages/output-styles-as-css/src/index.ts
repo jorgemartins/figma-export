@@ -52,7 +52,7 @@ export = ({
                         const value = boxShadowValue || filterBlurValue;
 
                         if (value) {
-                            text += writeComment(style.comment);
+                            style.comment && text += writeComment(style.comment);
                             text += writeVariable(style.name, value);
                         }
 
@@ -60,7 +60,7 @@ export = ({
                     }
 
                     case 'TEXT': {
-                        text += writeComment(style.comment);
+                        style.comment && text += writeComment(style.comment);
                         text += writeVariable(`${style.name}-font-family`, `"${style.style.fontFamily}"`);
                         text += writeVariable(`${style.name}-font-size`, `${style.style.fontSize}px`);
                         text += writeVariable(`${style.name}-font-style`, `${style.style.fontStyle}`);
