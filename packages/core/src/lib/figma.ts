@@ -12,11 +12,11 @@ import {
     chunk,
 } from './utils';
 
-const getComponents = (children: readonly Figma.Node[] = []): FigmaExport.ComponentNode[] => {
+const getComponents = (children: readonly Figma.Node[] = [], filteredWord?: string): FigmaExport.ComponentNode[] => {
     let components: FigmaExport.ComponentNode[] = [];
 
     children.forEach((component) => {
-        if (component.type === 'COMPONENT') {
+        if (component.type === 'COMPONENT' && !component.name.includes(filteredWord)) {
             components.push({
                 ...component,
                 svg: '',
@@ -48,12 +48,12 @@ type GetPagesOptions = {
     only?: string | string[];
 }
 
-const getPages = (document: Figma.Document, options: GetPagesOptions = {}): FigmaExport.PageNode[] => {
+const getPages = (document: Figma.Document, options: GetPagesOptions = {}, filteredWord: string): FigmaExport.PageNode[] => {
     const pages = filterPagesByName(document.children as Figma.Canvas[], options.only);
 
     return pages.map((page) => ({
         ...page,
-        components: getComponents(page.children as readonly FigmaExport.ComponentNode[]),
+        components: getComponents(page.children as readonly FigmaExport.ComponentNode[], filteredWord),
     }));
 };
 
@@ -138,6 +138,7 @@ const enrichPagesWithSvg = async (
     client: Figma.ClientInterface,
     fileId: string,
     pages: FigmaExport.PageNode[],
+    filteredWord: string,
     svgOptions?: FileSvgOptions,
 ): Promise<FigmaExport.PageNode[]> => {
     const componentIds = getIdsFromPages(pages);
