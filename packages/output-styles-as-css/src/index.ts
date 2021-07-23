@@ -28,7 +28,7 @@ export = ({
                             .join(', ');
 
                         if (value) {
-                            text += writeComment(style.comment);
+                            style.comment && text += writeComment(style.comment);
                             text += writeVariable(style.name, value);
                         }
 
