@@ -7,6 +7,7 @@ type Options = FigmaExport.BaseCommandOptions & FigmaExport.ComponentsCommandOpt
 export const components = async ({
     token,
     fileId,
+    filteredWord,
     onlyFromPages = [],
     transformers = [],
     outputters = [],
@@ -27,7 +28,7 @@ export const components = async ({
         throw new Error('\'document\' is missing.');
     }
 
-    const pages = getPages((document), { only: onlyFromPages });
+    const pages = getPages((document), { only: onlyFromPages }, filteredWord);
 
     log('preparing components');
     const pagesWithSvg = await enrichPagesWithSvg(client, fileId, pages, {
